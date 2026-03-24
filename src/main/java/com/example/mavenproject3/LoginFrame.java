@@ -7,7 +7,7 @@ public class LoginFrame extends JFrame {
     private JTextField userField;
     private JPasswordField passField;
     private JButton loginBtn, registerBtn;
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
     public LoginFrame() {
         userDAO = new UserDAO();
@@ -55,18 +55,22 @@ public class LoginFrame extends JFrame {
         });
 
         registerBtn.addActionListener(e -> {
-            String user = userField.getText();
-            String pass = new String(passField.getPassword());
-            
-            if (user.isEmpty() || pass.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please fill all fields.");
-                return;
-            }
-
-            if (userDAO.registerUser(user, pass)) {
-                JOptionPane.showMessageDialog(this, "Customer registered successfully!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Registration failed (User might already exist).");
+            try {
+                String user = userField.getText();
+                String pass = new String(passField.getPassword());
+                
+                if (user.isEmpty() || pass.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Please fill all fields.");
+                    return;
+                }
+                
+                if (userDAO.registerUser(user, pass)) {
+                    JOptionPane.showMessageDialog(this, "Customer registered successfully!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Registration failed (User might already exist).");
+                }
+            } catch (Exception ex) {
+                System.getLogger(LoginFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         });
     }

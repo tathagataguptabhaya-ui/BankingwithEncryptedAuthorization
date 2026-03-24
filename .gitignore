@@ -1,0 +1,11 @@
+# Ignore the build folder
+/target/
+
+# Ignore NetBeans private settings
+nbproject/private/
+
+# Ignore your database credentials
+src/main/resources/db.properties
+
+# Ignore compiled class files
+*.class

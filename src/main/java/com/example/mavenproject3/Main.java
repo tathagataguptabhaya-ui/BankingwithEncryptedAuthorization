@@ -21,10 +21,14 @@ public class Main {
         String pass = sc.nextLine();
 
         if (choice == 1) {
-            if (userDAO.registerUser(user, pass)) {
-                System.out.println("Registration successful!");
-            } else {
-                System.out.println("Registration failed.");
+            try {
+                if (userDAO.registerUser(user, pass)) {
+                    System.out.println("Registration successful!");
+                } else {
+                    System.out.println("Registration failed.");
+                }
+            } catch (Exception ex) {
+                System.getLogger(Main.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         } else if (choice == 2) {
             if (userDAO.loginUser(user, pass)) {
